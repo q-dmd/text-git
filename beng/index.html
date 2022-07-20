@@ -1,132 +1,133 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-		    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title></title>
-		<style type="text/css">
-			.home {}
 
-			.main {
-				width: 100%;
-				height: 100%;
-				position: absolute;
-				top: 0;
-				left: 0;
-				background-color: rgba(0, 0, 0, 0.7);
-				display: none;
-			}
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title></title>
+	<style type="text/css">
+		.main {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background-color: rgba(0, 0, 0, 0.7);
+			display: none;
+		}
 
-			h2 {
-				position: absolute;
-				left: 50%;
-				top: 50%;
-				transform: translate(-50%, -50%);
-			}
+		h2 {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
 
-			h5 {
-				position: absolute;
-				left: 50%;
-				top: 50%;
-				transform: translate(-50%, 50%);
-			}
+		h5 {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, 50%);
+		}
 
-			canvas {
-				margin: 100px auto 0;
-				display: block;
-				border: 1px solid black;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="home">
-			<canvas id="can" width="288" height="512"></canvas>
-			<div class="main">
-				<h2>你失败了<h5>按A重新来过<br>手机双击</h5>
-				</h2>
-			</div>
+		canvas {
+			margin: 100px auto 0;
+			display: block;
+			border: 1px solid black;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="home">
+		<canvas id="can" width="288" height="512"></canvas>
+		<div class="main">
+			<h2>你失败了<h5>按A重新来过<br>手机双击</h5>
+			</h2>
 		</div>
-	</body>
-	<script type="text/javascript">
-		var canVas = document.querySelector('canvas');
-		var main = document.querySelector('.main');
-		var cns = canVas.getContext('2d');
-		var img = new Image();
-		img.src = 'img/pic5.jpg';
-		// img.src='img/pic6.png';
-		var imga = new Image();
-		imga.src = 'img/0.png';
-		var imgb = new Image();
-		imgb.src = 'img/pic3.jpg';
-		var x = 0,
-			y = 0,
-			n = 0,
-			h = 150,
-			c = 0;
-		var dsq;
-		img.onload = function() {
-			dsq = setInterval(function() {
-				cns.beginPath(); //开始
-				cns.drawImage(img, x, 20, 288, 512, 0, 0, 288, 512); //pic5
-				// cns.drawImage(img,x,10,288,512,0,0,288,512);
-				cns.closePath(); //结束
-				x = x == 736 ? 0 : x;
-				// x=x==1632?0:x;
-				x++;
-				cns.beginPath(); //开始
-				var z = 200 - y + n;
-				if (z > 512 || z < -30) {
+	</div>
+</body>
+<script type="text/javascript">
+	var canVas = document.querySelector('canvas');
+	var main = document.querySelector('.main');
+	var cns = canVas.getContext('2d');
+	var img = new Image();
+	img.src = 'img/pic5.jpg';
+	// img.src='img/pic6.png';
+	var imga = new Image();
+	imga.src = 'img/0.png';
+	var imgb = new Image();
+	imgb.src = 'img/pic3.jpg';
+	var x = 0,
+		y = 0,
+		n = 0,
+		h = 150,
+		c = 0;
+	var dsq;
+	img.onload = function () {
+		dsq = setInterval(function () {
+			cns.beginPath(); //开始
+			cns.drawImage(img, x, 20, 288, 512, 0, 0, 288, 512); //pic5
+			// cns.drawImage(img,x,10,288,512,0,0,288,512);
+			cns.closePath(); //结束
+			x = x == 736 ? 0 : x;
+			// x=x==1632?0:x;
+			x++;
+			cns.beginPath(); //开始
+			var z = 200 - y + n;
+			if (z > 512 || z < -30) {
+				clearInterval(dsq);
+				sx();
+				return main.style.display = 'block';
+			}
+
+
+			cns.beginPath(); //开始 上
+			cns.drawImage(imgb, 50, 100, 344, 689, h, 0, 100, 200 + c);
+			cns.closePath();
+			cns.beginPath(); //开始 下
+			cns.drawImage(imgb, 350, 120, 344, 689, h, 300 + c, 100, 300 - c);
+			cns.closePath();
+			if (h == -150) {
+				h = 288;
+				c = parseInt(Math.random() * 60) + 60;
+				// c=parseInt(Math.random()*60)+60;
+			}
+			h--;
+
+			cns.drawImage(imga, 0, 0, 28, 28, 30, z, 28, 28);
+			cns.closePath(); //结束
+			n--;
+			y -= 2;
+			if (z + 24 > 300 + c || z + 10 < 150 + c) {
+				if (58 > h && 30 < h + 100) {
 					clearInterval(dsq);
 					sx();
 					return main.style.display = 'block';
 				}
-
-
-				cns.beginPath(); //开始 上
-				cns.drawImage(imgb, 50, 100, 344, 689, h, 0, 100, 200 + c);
-				cns.closePath();
-				cns.beginPath(); //开始 下
-				cns.drawImage(imgb, 350, 120, 344, 689, h, 300 + c, 100, 300 - c);
-				cns.closePath();
-				if (h == -150) {
-					h = 288;
-					c = parseInt(Math.random() * 60) + 60;
-					// c=parseInt(Math.random()*60)+60;
-				}
-				h--;
-
-				cns.drawImage(imga, 0, 0, 28, 28, 30, z, 28, 28);
-				cns.closePath(); //结束
-				n--;
-				y -= 2;
-				if (z + 24 > 300 + c || z + 10 < 150 + c) {
-					if (58 > h && 30 < h + 100) {
-						clearInterval(dsq);
-						sx();
-						return main.style.display = 'block';
-					}
-				}
-
-			}, 10)
-		}
-		window.onkeydown = function(e) {
-			// console.log(e);
-			// console.log(e.keyCode);
-			if (e.keyCode == 32) {
-				n += -50;
 			}
-			if (e.keyCode == 65) {
-				window.location.href = "index.html";
-			}
-		}
-		window.addEventListener('click',function (){
+
+		}, 10)
+	}
+	window.onkeydown = function (e) {
+		// console.log(e);
+		// console.log(e.keyCode);
+		if (e.keyCode == 32) {
 			n += -50;
-		},false);
-		function sx(){
-			window.addEventListener('dblclick',function (){
-				window.location.href = "index.html";
-			},false);
 		}
-	</script>
+		if (e.keyCode == 65) {
+			window.location.href = "index.html";
+		}
+	}
+	window.addEventListener('click', function () {
+		n += -50;
+	}, false);
+	function sx() {
+		window.addEventListener('dblclick', function () {
+			window.location.href = "index.html";
+		}, false);
+	}
+</script>
+
 </html>
